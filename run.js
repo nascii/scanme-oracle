@@ -9,8 +9,8 @@ web3.setProvider(new web3.providers.HttpProvider('http://127.0.0.1:8545'));
 var eth = web3.eth;
 var personal = web3.personal;
 
-personal.newAccount('kek');
-personal.unlockAccount(eth.accounts[0], 'kek');
+//personal.newAccount('kek');
+personal.unlockAccount(eth.accounts[0], '123123');
 eth.defaultAccount = eth.accounts[0];
 
 // Fetch ABI
@@ -35,24 +35,24 @@ var scanContract = ScanContract.new(deployData, function(e, contract) {
 
 scanContract.setFirstName('Vasya', {from: eth.accounts[0]});
 scanContract.setLastName('Pupkin', {from: eth.accounts[0]});
-scanContract.setICImageUri('ic_image_uri": "https://www.aph.com/community/wp-content/uploads/2014/10/cut.jpg', {from: eth.accounts[0]});
+scanContract.setICImageUri('https://www.aph.com/community/wp-content/uploads/2014/10/cut.jpg', {from: eth.accounts[0]});
 
 /* IN PROCESSING */
 
-var firstName = scanContract.getFirstName({from: eth.accounts[0]})
-var lastName = scanContract.getLastName({from: eth.accounts[0]})
-var ICImageUri = scanContract.getICImageUri({from: eth.accounts[0]})
+var firstName = scanContract.getFirstName.call({from: eth.accounts[0]})
+var lastName = scanContract.getLastName.call({from: eth.accounts[0]})
+var ICImageUri = scanContract.getICImageUri.call({from: eth.accounts[0]})
 
 var requestData = {
     "user_info": {
         "first_name": firstName,
-        "last_name": last_name
+        "last_name": lastName
     },
     "ic_image_uri": ICImageUri
 }
 
 scan(requestData)
-    .then((res) => {
+    .then(res => {
         scanContract.setValidationStatus(res.data.is_valid, {from: eth.accounts[0]})
     })
     .catch(e => console.error(e));
