@@ -1,7 +1,7 @@
 /* SOMEWHERE IN THE WORLD */
 var fs = require('fs');
 var Web3 = require('web3');
-var scan = require('scan');
+var scan = require('./scan');
 
 var web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider('http://127.0.0.1:8545'));
